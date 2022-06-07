@@ -77,8 +77,8 @@ std::string removeBlanks(std::string rpn_input) // remove space from RPN sequenc
 	return rpn_input;
 }
 
-/*
-std::string calculate(std::string rpn)
+
+int calculate(std::string rpn)
 {
 	std::stack<int>stos{};
 
@@ -89,13 +89,43 @@ std::string calculate(std::string rpn)
 			stos.push(x - 48); // push to stack and convert value from ASCII to int value
 		else
 		{
+			// rule LIFO - Last In Firs Out
 			valB = stos.top();
 			stos.pop();
+			valA = stos.top();
+			stos.pop();
+
+			switch (x)
+			{
+			case '+':
+			{
+				stos.push(valA + valB);
+				break;
+			}
+			case '-':
+			{
+				stos.push(valA - valB);
+				break;
+			}
+			case '*':
+			{
+				stos.push(valA * valB);
+				break;
+			}
+			case '/':
+			{
+				stos.push(valA / valB);
+				break;
+			}
+
+			default:
+				break;
+			}
 
 		}
 	}
+	return stos.top();
 }
-*/
 
 int main()
 {
@@ -106,6 +136,8 @@ int main()
 		rpn = convertInfix(infix);
 		cout << "\nConverted infix expresion ---> " << infix << " <--- to RPN ---> " << rpn << " <---\n" << endl;
 
+		cout << calculate(rpn);
+		cout << "\nResult RPN is: " << "\n";
 
 	} while (true);
 
