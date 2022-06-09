@@ -4,24 +4,10 @@
 #include <algorithm>
 #include <cmath>
 
-/* Used sources:
-* https://eduinf.waw.pl/inf/utils/010_2010/0410.php
-* https://www.algorytm.edu.pl/algorytmy-maturalne/onp
-* https://www.szkolazpasja.pl/onp-np-notacja-infiksowa/
-* https://www.youtube.com/watch?v=zla7ha0OORM
-* https://www.youtube.com/watch?v=7ha78yWRDlE
-* https://www.youtube.com/watch?v=qN8LPIcY6K4
-* https://www.youtube.com/watch?v=pg4JpKdKcMw
-*/
-
-using std::cout;
-using std::cin;
-using std::endl;
-
 
 std::string convertInfix(const std::string& input) //takes infix and convert it into RPN notation ----> (a+b)*c/d ---> ab+c*d/
 {
-	std::string operators("r^*/%+-");
+	std::string operators("^*/%+-"); // Operator precedence from the highes to lowest
 	std::stack<char>stos2{};
 	std::string result{};
 	for (auto x : input)
@@ -115,8 +101,6 @@ int calculate(std::string rpn)
 				stos.push(valA ^ valB);
 				break;
 			}
-
-
 			default:
 				break;
 			}
@@ -131,17 +115,18 @@ int main()
 	std::string rpn{};
 	std::string infix{};
 
-	cout << "Welcome to the RPN Calculator\n" << endl;
+	std::cout << "+---------------------------------+\n" << std::endl;
+	std::cout << "+- Welcome to the RPN Calculator -+\n" << std::endl;
+	std::cout << "+---------------------------------+\n" << std::endl;
+
 	do {
-		cout << "Write infix expression:\n" << endl;
-		cin >> infix;
+		std::cout << "Write your infix expression:\n" << std::endl;
+		std::cin >> infix;
 
 		rpn = convertInfix(infix);
 
-		cout << "\nConverted infix expresion ---> " << infix << " <--- to RPN ---> " << rpn << " <---\n" << endl;
-
-		cout << calculate(rpn);
-		cout << "\nResult RPN is: " << "\n";
+		std::cout << "\nConverted infix expresion ---> " << infix << " <--- to RPN ---> " << rpn << " <---\n" << std::endl;
+		std::cout << "\nResult RPN is: " << calculate(rpn) << "\n" << std::endl;
 
 	} while (true);
 }
