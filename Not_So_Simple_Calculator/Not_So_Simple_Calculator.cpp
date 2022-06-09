@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <stack>
-// #include <sstream>
 #include <algorithm>
+#include <cmath>
 
 /* Used sources:
 * https://eduinf.waw.pl/inf/utils/010_2010/0410.php
@@ -19,16 +19,9 @@ using std::cin;
 using std::endl;
 
 
-
-std::string rpn{};
-std::string infix{};
-
-
-// juz_zmienione = convertInfix(do_skonwertowania);
-
 std::string convertInfix(const std::string& input) //takes infix and convert it into RPN notation ----> (a+b)*c/d ---> ab+c*d/
 {
-	std::string operators("*/%+-");
+	std::string operators("r^*/%+-");
 	std::stack<char>stos2{};
 	std::string result{};
 	for (auto x : input)
@@ -41,7 +34,7 @@ std::string convertInfix(const std::string& input) //takes infix and convert it 
 		{
 			if (!stos2.size() == 0 && operators.find(stos2.top()) != std::string::npos)
 			{
-				if (operators.find(x) < operators.find(stos2.top()))
+				if (operators.find(x) > operators.find(stos2.top()))
 				{
 					result += stos2.top();
 					stos2.pop();
@@ -117,6 +110,12 @@ int calculate(std::string rpn)
 				stos.push(valA / valB);
 				break;
 			}
+			case '^':
+			{
+				stos.push(valA ^ valB);
+				break;
+			}
+
 
 			default:
 				break;
@@ -129,18 +128,21 @@ int calculate(std::string rpn)
 
 int main()
 {
+	std::string rpn{};
+	std::string infix{};
+
 	cout << "Welcome to the RPN Calculator\n" << endl;
 	do {
 		cout << "Write infix expression:\n" << endl;
 		cin >> infix;
+
 		rpn = convertInfix(infix);
+
 		cout << "\nConverted infix expresion ---> " << infix << " <--- to RPN ---> " << rpn << " <---\n" << endl;
 
 		cout << calculate(rpn);
 		cout << "\nResult RPN is: " << "\n";
 
 	} while (true);
-
-
 }
 
